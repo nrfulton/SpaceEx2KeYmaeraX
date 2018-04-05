@@ -127,14 +127,17 @@ object Converter {
     odeSystemStr.asProgram
   }
 
+  /** @todo misleading name. Converts a SpaceEx ODE string into a string that should parse as a [[DifferentialProgram]]. */
   private def convertFlow(flow: String) = {
     flow.replaceAll("&amp;", ",").replaceAll("&",",").replaceAll("==", "=")
   } ensuring(parses(_))
 
+  /** @todo misleading name. Converts a SpaceEx <invariant></invariant> into a string that should parse as a [[Formula]]. */
   private def convertInvariant(inv: String) = {
     convertFormula(inv)
   } ensuring(parses(_))
 
+  /** @todo mislieading name. Converts a SpaceEx formula into a string that should parse as a [[Formula]] */
   private def convertFormula(formula: String) = {
     val fixHTML =
       formula.replaceAll("&amp;", "&")
@@ -148,6 +151,7 @@ object Converter {
     fixChainedInequalities(fixHTML)
   } ensuring(parses(_))
 
+  /** Trys to parse the string as a formula/program/differentialprogram. Returns true if any of those parses work.*/
   private def parses(s: String) : Boolean = {
     try {s.asFormula; true}
     catch {
@@ -166,9 +170,6 @@ object Converter {
       }
     }
   }
-
-
-
 
   //region Absolutely terrible code for handling absolutely terrible chained inequalities.
 
