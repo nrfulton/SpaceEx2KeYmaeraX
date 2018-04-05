@@ -10,8 +10,11 @@ import edu.cmu.cs.ls.keymaerax.parser.KeYmaeraXPrettyPrinter
   */
 object Main {
   def main(argv : Array[String]): Unit = {
+    val locationOfBenchmarkFolder = argv(0) //unzipped from http://verivital.com/hyst/benchmark-nonlinear/
+    //e.g., /home/nfulton/Downloads/benchmarks
+
     PrettyPrinter.setPrinter(KeYmaeraXPrettyPrinter)
-    val result = SogokonConverter(new java.io.File("/home/nfulton/Downloads/benchmarks"))
+    val result = SogokonConverter(new java.io.File(locationOfBenchmarkFolder))
     println(ProblemSet2JSON(result))
   }
 }
