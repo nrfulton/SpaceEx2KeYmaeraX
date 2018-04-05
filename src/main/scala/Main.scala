@@ -5,6 +5,9 @@ import scala.xml._
 
 import edu.cmu.cs.ls.keymaerax.parser.KeYmaeraXPrettyPrinter
 
+/**
+  * @author Nathan Fulton
+  */
 object Main {
   def main(argv : Array[String]): Unit = {
     PrettyPrinter.setPrinter(KeYmaeraXPrettyPrinter)
@@ -13,8 +16,10 @@ object Main {
   }
 }
 
-/** Converts all examples from Sogokon et al. 2016 nonlinear systems benchmark. */
+/** Converts all examples from Sogokon et al. 2016 nonlinear systems benchmark.
+  * @author Nathan Fulton */
 object SogokonConverter {
+  /** These are the files we don't support yet. */
   private def ignoreList(file: java.io.File) =
     //Ignored because we dont' support hybrid systems yet.
     file.getName.contains("buck_v1") ||
@@ -52,7 +57,9 @@ object SogokonConverter {
   }
 }
 
-/** Converts SpaceEx into KeYmaera X using raw string transformations on portions of the XML1. */
+/** Converts SpaceEx into KeYmaera X using raw string transformations on portions of the XML.
+  * @todo currrently only works for models that contain a single flow and no transitions.
+  * @author Nathan Fulton */
 object Converter {
   def apply(xmlContents: String, cfgContents: String): Formula = {
     //Get the ODESystem.
