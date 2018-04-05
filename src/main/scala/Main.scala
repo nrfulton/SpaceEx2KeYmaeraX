@@ -12,8 +12,18 @@ object Main {
   def main(argv : Array[String]): Unit = {
     PrettyPrinter.setPrinter(KeYmaeraXPrettyPrinter)
     val result = SogokonConverter(new java.io.File("/home/nfulton/Downloads/benchmarks"))
-    println(result)
+    println(ProblemSet2JSON(result))
   }
+}
+
+/** Good enough pretty-print of a String -> Formula list as a JSON object.
+  * @author Nathan Fulton */
+object ProblemSet2JSON {
+  def apply(map: Map[String, Formula]): String =
+    "{\n" + map.map(kvp => {
+      assert(!kvp._1.contains('\'') && !KeYmaeraXPrettyPrinter(kvp._2).contains('"'))
+      s"""  "${kvp._1}": "${KeYmaeraXPrettyPrinter(kvp._2)}" """
+    }).reduce(_ + ",\n" + _) + "\n}"
 }
 
 /** Converts all examples from Sogokon et al. 2016 nonlinear systems benchmark.
