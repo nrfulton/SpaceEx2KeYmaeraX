@@ -7,19 +7,8 @@ import edu.cmu.cs.ls.keymaerax.parser.KeYmaeraXPrettyPrinter
 
 object Main {
   def main(argv : Array[String]): Unit = {
-    //    assert(argv.length == 2, "Usage: /location/to/model/model.xml /location/to/model/model.cfg")
-    //    val xmlFile = argv(0)
-    //    val cfgFile = argv(1)
-
-//    val archive = new URL("http://verivital.com/hyst/benchmark-nonlinear/sogokon2016arch.zip")
-//
-//    val here = new java.io.File(".")
-//    ZipArchive.fromURL(archive).unzip(here)
-//
     PrettyPrinter.setPrinter(KeYmaeraXPrettyPrinter)
-
     val result = SogokonConverter(new java.io.File("/home/nfulton/Downloads/benchmarks"))
-
     println(result)
   }
 }
@@ -27,9 +16,6 @@ object Main {
 /** Converts all examples from Sogokon et al. 2016 nonlinear systems benchmark. */
 object SogokonConverter {
   private def ignoreList(file: java.io.File) =
-    //Ignored because <- is parsed as a backwards arrow in x<-1
-    file.getName.contains("dumortier_llibre_artes_ex_10_15_i") ||
-    file.getName.contains("strogatz_ex_6_3_2") ||
     //Ignored because we dont' support hybrid systems yet.
     file.getName.contains("buck_v1") ||
     file.getName.contains("buck_v2") ||
@@ -149,6 +135,7 @@ object Converter {
         .replaceAll("&geq;", ">=")
         .replaceAll("&lt;", "<")
         .replaceAll("&leq;", ">")
+        .replaceAll("<-", "< -")
         .replaceAll("==", "=")
 
     fixChainedInequalities(fixHTML)
